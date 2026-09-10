@@ -188,6 +188,7 @@
             margin-bottom: 4px;
         }
     </style>
+    <link rel="stylesheet" href="../../shared/css/safe-area.css">
 </head>
 <body>
     <div class="app-header">
@@ -327,5 +328,6 @@
         document.getElementById('selectedMethodName').textContent = PAYMENT_METHODS[selectedMethod].name;
         document.getElementById('totalPrice').textContent = `${TARIFFS[selectedTariff].price} ₽`;
     </script>
+    <script src="../../shared/js/safe-area.js"></script>
 </body>
 </html>

@@ -1,0 +1,35 @@
+/* ========== БЕЗОПАСНЫЕ ОТСТУПЫ ДЛЯ TELEGRAM FULLSCREEN ========== */
+
+/* Отступ сверху для всего контента */
+body {
+    padding-top: env(safe-area-inset-top, 0px) !important;
+}
+
+/* Топ-бары с учётом safe-area */
+.top-bar {
+    padding-top: calc(12px + env(safe-area-inset-top, 0px)) !important;
+}
+
+/* Хедеры с учётом safe-area */
+.app-header,
+.fun-header,
+.dashboard-header,
+.admin-header,
+.teacher-header,
+.partner-header,
+.profile-header {
+    padding-top: calc(16px + env(safe-area-inset-top, 0px)) !important;
+}
+
+/* Для страниц без top-bar - обычный отступ */
+.screen:not(:has(.top-bar)) .app-header,
+.screen:not(:has(.top-bar)) .fun-header {
+    padding-top: calc(20px + env(safe-area-inset-top, 0px)) !important;
+}
+
+/* Фикс для iOS Safari */
+@supports (padding: max(0px)) {
+    body {
+        padding-top: max(env(safe-area-inset-top), 0px) !important;
+    }
+}

@@ -152,6 +152,7 @@
         .nav-item.active { color: var(--primary); }
         .nav-icon { font-size: 22px; margin-bottom: 2px; }
     </style>
+    <link rel="stylesheet" href="../shared/css/safe-area.css">
 </head>
 <body>
     <div class="top-bar">
@@ -290,5 +291,6 @@
         document.getElementById('selectedMethodName').textContent = PAYMENT_METHODS[selectedMethod].name;
         document.getElementById('totalPrice').textContent = `${TARIFFS[selectedTariff].price} ₽`;
     </script>
+    <script src="../shared/js/safe-area.js"></script>
 </body>
 </html>
