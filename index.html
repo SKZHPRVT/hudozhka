@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="telegram-web-app-capable" content="yes">
-    <title>Художка.ПРО — Главная</title>
+    <title>Художка.ПРО</title>
     <style>
         :root {
             --primary: #8B4513;
@@ -17,7 +17,6 @@
         
         html, body {
             width: 100%;
-            height: 100%;
             margin: 0;
             padding: 0;
             overflow-y: auto;
@@ -30,13 +29,8 @@
             max-width: 480px;
             margin: 0 auto;
             min-height: 100vh;
-            min-height: 100dvh;
             padding: 20px;
             padding-bottom: 100px;
-        }
-        
-        .container {
-            width: 100%;
         }
         
         .logo {
@@ -44,21 +38,9 @@
             margin-bottom: 24px;
         }
         
-        .logo-icon {
-            font-size: 60px;
-            margin-bottom: 12px;
-        }
-        
-        .logo h1 {
-            font-size: 24px;
-            color: var(--primary);
-            margin-bottom: 6px;
-        }
-        
-        .logo p {
-            color: #666;
-            font-size: 14px;
-        }
+        .logo-icon { font-size: 60px; margin-bottom: 12px; }
+        .logo h1 { font-size: 24px; color: var(--primary); margin-bottom: 6px; }
+        .logo p { color: #666; font-size: 14px; }
         
         .section-title {
             text-align: center;
@@ -87,19 +69,9 @@
             color: inherit;
         }
         
-        .core-module:active {
-            transform: scale(0.95);
-        }
-        
-        .core-icon {
-            font-size: 32px;
-            margin-bottom: 6px;
-        }
-        
-        .core-name {
-            font-weight: 600;
-            font-size: 12px;
-        }
+        .core-module:active { transform: scale(0.95); }
+        .core-icon { font-size: 32px; margin-bottom: 6px; }
+        .core-name { font-weight: 600; font-size: 12px; }
         
         .divider {
             text-align: center;
@@ -122,11 +94,7 @@
         .divider::before { left: 0; }
         .divider::after { right: 0; }
         
-        .roles {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .roles { display: flex; flex-direction: column; gap: 10px; }
         
         .role-card {
             background: white;
@@ -142,106 +110,87 @@
             gap: 14px;
         }
         
-        .role-card:active {
-            transform: scale(0.98);
-        }
-        
-        .role-icon {
-            font-size: 32px;
-            flex-shrink: 0;
-        }
-        
-        .role-info h3 {
-            font-size: 15px;
-            margin-bottom: 2px;
-        }
-        
-        .role-info p {
-            font-size: 12px;
-            color: #666;
-        }
+        .role-card:active { transform: scale(0.98); }
+        .role-icon { font-size: 32px; flex-shrink: 0; }
+        .role-info h3 { font-size: 15px; margin-bottom: 2px; }
+        .role-info p { font-size: 12px; color: #666; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">
-            <div class="logo-icon">🎨</div>
-            <h1>Художка.ПРО</h1>
-            <p>Цифровая экосистема школы рисования</p>
-        </div>
+    <div class="logo">
+        <div class="logo-icon">🎨</div>
+        <h1>Художка.ПРО</h1>
+        <p>Цифровая экосистема школы рисования</p>
+    </div>
+    
+    <h2 class="section-title">⚡ Основные функции</h2>
+    <div class="core-modules">
+        <a href="core/calendar/index.html" class="core-module">
+            <div class="core-icon">📅</div>
+            <div class="core-name">Календарь</div>
+        </a>
+        <a href="core/payment/index.html" class="core-module">
+            <div class="core-icon">💳</div>
+            <div class="core-name">Оплата</div>
+        </a>
+        <a href="core/video/index.html" class="core-module">
+            <div class="core-icon">📹</div>
+            <div class="core-name">Видео</div>
+        </a>
+    </div>
+    
+    <div class="divider">Выберите роль</div>
+    
+    <div class="roles">
+        <a href="admin/dashboard.html" class="role-card">
+            <span class="role-icon">👨‍💼</span>
+            <div class="role-info">
+                <h3>Администрация</h3>
+                <p>CRM, финансы, отчёты, рассылки</p>
+            </div>
+        </a>
         
-        <h2 class="section-title">⚡ Основные функции</h2>
-        <div class="core-modules">
-            <a href="core/calendar/index.html" class="core-module">
-                <div class="core-icon">📅</div>
-                <div class="core-name">Календарь</div>
-            </a>
-            <a href="core/payment/index.html" class="core-module">
-                <div class="core-icon">💳</div>
-                <div class="core-name">Оплата</div>
-            </a>
-            <a href="core/video/index.html" class="core-module">
-                <div class="core-icon">📹</div>
-                <div class="core-name">Видео</div>
-            </a>
-        </div>
+        <a href="teacher/dashboard.html" class="role-card">
+            <span class="role-icon">👩‍🏫</span>
+            <div class="role-info">
+                <h3>Преподаватель</h3>
+                <p>Расписание, журнал, чаты</p>
+            </div>
+        </a>
         
-        <div class="divider">Выберите роль</div>
+        <a href="parent/dashboard.html" class="role-card">
+            <span class="role-icon">👨‍👩‍👧</span>
+            <div class="role-info">
+                <h3>Родитель</h3>
+                <p>Записи, оплата, видеонаблюдение</p>
+            </div>
+        </a>
         
-        <div class="roles">
-            <a href="admin/dashboard.html" class="role-card">
-                <span class="role-icon">👨‍💼</span>
-                <div class="role-info">
-                    <h3>Администрация</h3>
-                    <p>CRM, финансы, отчёты, рассылки</p>
-                </div>
-            </a>
-            
-            <a href="teacher/dashboard.html" class="role-card">
-                <span class="role-icon">👩‍🏫</span>
-                <div class="role-info">
-                    <h3>Преподаватель</h3>
-                    <p>Расписание, журнал, чаты</p>
-                </div>
-            </a>
-            
-            <a href="parent/dashboard.html" class="role-card">
-                <span class="role-icon">👨‍👩‍👧</span>
-                <div class="role-info">
-                    <h3>Родитель</h3>
-                    <p>Записи, оплата, видеонаблюдение, галерея</p>
-                </div>
-            </a>
-            
-            <a href="student/dashboard.html" class="role-card">
-                <span class="role-icon">🎨</span>
-                <div class="role-info">
-                    <h3>Ребёнок</h3>
-                    <p>Игры, задания, достижения</p>
-                </div>
-            </a>
-            
-            <a href="partner/dashboard.html" class="role-card">
-                <span class="role-icon">🤝</span>
-                <div class="role-info">
-                    <h3>Партнёр / Франчайзи</h3>
-                    <p>Аналитика, инвестиции, франшиза</p>
-                </div>
-            </a>
-        </div>
+        <a href="student/dashboard.html" class="role-card">
+            <span class="role-icon">🎨</span>
+            <div class="role-info">
+                <h3>Ребёнок</h3>
+                <p>Игры, задания, достижения</p>
+            </div>
+        </a>
+        
+        <a href="partner/dashboard.html" class="role-card">
+            <span class="role-icon">🤝</span>
+            <div class="role-info">
+                <h3>Партнёр / Франчайзи</h3>
+                <p>Аналитика, инвестиции, франшиза</p>
+            </div>
+        </a>
     </div>
     
     <script>
         let tg = window.Telegram?.WebApp;
-        
         if (tg) {
             tg.ready();
             tg.expand();
-            tg.isFullscreen = true;
             tg.setHeaderColor('#8B4513');
             tg.setBackgroundColor('#FAF6F0');
             setTimeout(() => tg.expand(), 100);
-            setTimeout(() => tg.expand(), 500);
         }
     </script>
 </body>
