@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="telegram-web-app-capable" content="yes">
+    <title>Задания — Преподаватель</title>
+    <style>
+        :root { --primary: #8B4513; --bg-cream: #FAF6F0; --tg-hint: #999999; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg-cream); max-width: 480px; margin: 0 auto; min-height: 100vh; padding-bottom: 80px; }
+        .top-bar { background: linear-gradient(135deg, #8B4513, #D2691E); color: white; padding: 12px 16px; display: flex; align-items: center; gap: 12px; }
+        .back-btn { background: rgba(255,255,255,0.2); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; cursor: pointer; }
+        .top-bar-title { font-size: 16px; font-weight: 600; }
+        .section { padding: 16px; }
+        .add-btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; margin-bottom: 16px; }
+        .hw-card { background: white; border-radius: 12px; padding: 14px; margin-bottom: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+        .hw-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+        .hw-group { font-size: 12px; color: var(--tg-hint); margin-bottom: 6px; }
+        .hw-stats { display: flex; gap: 12px; font-size: 12px; }
+        .hw-stat { color: var(--tg-hint); }
+        .hw-stat b { color: var(--primary); }
+        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: white; border-top: 1px solid #eee; display: flex; justify-content: space-around; padding: 8px 0 20px; z-index: 100; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; color: var(--tg-hint); text-decoration: none; font-size: 11px; }
+        .nav-item.active { color: var(--primary); }
+        .nav-icon { font-size: 22px; margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <button class="back-btn" onclick="window.location.href='dashboard.html'">←</button>
+        <div class="top-bar-title">Домашние задания</div>
+    </div>
+    <div class="section">
+        <button class="add-btn" onclick="alert('Создать задание')">+ Создать задание</button>
+        <div class="hw-card">
+            <div class="hw-title">Натюрморт с фруктами</div>
+            <div class="hw-group">Группа А-1 • до 25 сентября</div>
+            <div class="hw-stats">
+                <span class="hw-stat">Сдали: <b>3 из 8</b></span>
+                <span class="hw-stat">Проверено: <b>2</b></span>
+            </div>
+        </div>
+        <div class="hw-card">
+            <div class="hw-title">Эскиз городского пейзажа</div>
+            <div class="hw-group">Группа С-1 • до 22 сентября</div>
+            <div class="hw-stats">
+                <span class="hw-stat">Сдали: <b>7 из 10</b></span>
+                <span class="hw-stat">Проверено: <b>5</b></span>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-nav">
+        <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span><span>Главная</span></a>
+        <a href="schedule.html" class="nav-item"><span class="nav-icon">📅</span><span>Расписание</span></a>
+        <a href="journal.html" class="nav-item"><span class="nav-icon">📋</span><span>Журнал</span></a>
+        <a href="homework.html" class="nav-item active"><span class="nav-icon">📝</span><span>Задания</span></a>
+        <a href="chat.html" class="nav-item"><span class="nav-icon">💬</span><span>Чаты</span></a>
+    </div>
+    <script>let tg = window.Telegram?.WebApp; if (tg) { tg.ready(); tg.expand(); }</script>
+</body>
+</html>
