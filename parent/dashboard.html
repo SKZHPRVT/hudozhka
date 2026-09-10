@@ -11,25 +11,17 @@
             --accent: #D2691E;
             --olive: #6B8E23;
             --bg-cream: #FAF6F0;
-            --success: #4CAF50;
-            --danger: #FF5722;
-            --info: #2196F3;
             --tg-hint: #999999;
         }
-        
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, sans-serif;
             background: var(--bg-cream);
             max-width: 480px;
             margin: 0 auto;
             min-height: 100vh;
             padding-bottom: 80px;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
         }
-        
         .top-bar {
             background: linear-gradient(135deg, #8B4513, #D2691E);
             color: white;
@@ -38,7 +30,6 @@
             align-items: center;
             gap: 12px;
         }
-        
         .back-btn {
             background: rgba(255,255,255,0.2);
             border: none;
@@ -48,184 +39,86 @@
             border-radius: 50%;
             font-size: 18px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
-        
-        .top-bar-title {
-            font-size: 16px;
-            font-weight: 600;
-        }
-        
+        .top-bar-title { font-size: 16px; font-weight: 600; }
         .dashboard-header {
             background: linear-gradient(135deg, #8B4513, #D2691E);
             color: white;
             padding: 0 16px 20px;
-            border-radius: 0 0 20px 20px;
             margin-bottom: 16px;
         }
-        
-        .child-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-        
+        .child-info { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
         .child-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 50px; height: 50px; border-radius: 50%;
+            background: white; display: flex; align-items: center; justify-content: center;
             font-size: 28px;
         }
-        
-        .child-name {
-            font-size: 18px;
-            font-weight: 600;
-        }
-        
-        .child-group {
-            font-size: 13px;
-            opacity: 0.9;
-        }
-        
+        .child-name { font-size: 18px; font-weight: 600; }
+        .child-group { font-size: 13px; opacity: 0.9; }
         .next-lesson-banner {
             background: rgba(255,255,255,0.15);
-            border-radius: 12px;
-            padding: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border-radius: 12px; padding: 12px;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        
-        .next-lesson-info {
-            font-size: 13px;
-        }
-        
+        .next-lesson-info { font-size: 13px; }
         .watch-btn {
-            background: white;
-            color: var(--primary);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 13px;
+            background: white; color: var(--primary);
+            border: none; padding: 8px 16px; border-radius: 8px;
+            font-weight: 600; cursor: pointer; font-size: 13px;
         }
-        
         .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            padding: 0 16px;
-            margin-bottom: 20px;
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 8px; padding: 0 16px; margin-bottom: 20px;
         }
-        
         .quick-action {
-            background: white;
-            border-radius: 12px;
-            padding: 16px 8px;
-            text-align: center;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: all 0.2s;
+            background: white; border-radius: 12px; padding: 16px 8px;
+            text-align: center; cursor: pointer; text-decoration: none;
+            color: inherit; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        
-        .quick-action:active { transform: scale(0.95); }
         .qa-icon { font-size: 28px; margin-bottom: 4px; }
         .qa-label { font-size: 11px; font-weight: 500; }
-        
-        .section {
-            padding: 0 16px;
-            margin-bottom: 20px;
-        }
-        
+        .section { padding: 0 16px; margin-bottom: 20px; }
         .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
+            display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 12px;
         }
-        
         .section-title { font-size: 16px; font-weight: 700; }
         .see-all { color: var(--olive); font-size: 13px; text-decoration: none; }
-        
         .feed-item {
-            background: white;
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-            display: flex;
-            gap: 12px;
+            background: white; border-radius: 12px; padding: 12px;
+            margin-bottom: 8px; display: flex; gap: 12px;
         }
-        
         .feed-icon { font-size: 24px; }
         .feed-content { flex: 1; }
-        .feed-title { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+        .feed-title { font-weight: 600; font-size: 14px; }
         .feed-text { font-size: 13px; color: #666; }
         .feed-time { font-size: 11px; color: var(--tg-hint); margin-top: 4px; }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
-        
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .stat-card {
-            background: white;
-            border-radius: 12px;
-            padding: 12px;
+            background: white; border-radius: 12px; padding: 12px;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
         }
-        
         .stat-icon { font-size: 24px; }
         .stat-value { font-size: 18px; font-weight: 700; color: var(--primary); }
         .stat-label { font-size: 11px; color: var(--tg-hint); }
-        
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
+            position: fixed; bottom: 0; left: 50%;
             transform: translateX(-50%);
-            width: 100%;
-            max-width: 480px;
-            background: white;
-            border-top: 1px solid #eee;
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0 20px;
-            z-index: 100;
+            width: 100%; max-width: 480px;
+            background: white; border-top: 1px solid #eee;
+            display: flex; justify-content: space-around;
+            padding: 8px 0 20px; z-index: 100;
         }
-        
         .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            color: var(--tg-hint);
-            text-decoration: none;
-            font-size: 11px;
+            display: flex; flex-direction: column; align-items: center;
+            cursor: pointer; color: var(--tg-hint);
+            text-decoration: none; font-size: 11px;
         }
-        
         .nav-item.active { color: var(--primary); }
         .nav-icon { font-size: 22px; margin-bottom: 2px; }
     </style>
 </head>
 <body>
-    <div class="top-bar">
-        <button class="back-btn" onclick="goBack()">←</button>
-        <div class="top-bar-title">Личный кабинет</div>
-    </div>
-    
     <div class="top-bar">
         <button class="back-btn" onclick="goBack()">←</button>
         <div class="top-bar-title">Личный кабинет</div>
@@ -239,7 +132,6 @@
                 <div class="child-group">Группа: Акварель-2 | 8 лет</div>
             </div>
         </div>
-        
         <div class="next-lesson-banner">
             <div class="next-lesson-info">
                 <strong>Ближайшее занятие:</strong><br>
@@ -287,13 +179,6 @@
                 <div class="feed-text">Среда, 17:00 - 18:30</div>
             </div>
         </div>
-        <div class="feed-item">
-            <span class="feed-icon">🖼</span>
-            <div class="feed-content">
-                <div class="feed-title">Городской пейзаж</div>
-                <div class="feed-text">Пятница, 16:00 - 17:30</div>
-            </div>
-        </div>
     </div>
     
     <div class="section">
@@ -301,7 +186,6 @@
             <h2 class="section-title">📰 Лента событий</h2>
             <a href="gallery.html" class="see-all">Все →</a>
         </div>
-        
         <div class="feed-item">
             <span class="feed-icon">🖼</span>
             <div class="feed-content">
@@ -310,7 +194,6 @@
                 <div class="feed-time">2 часа назад</div>
             </div>
         </div>
-        
         <div class="feed-item">
             <span class="feed-icon">⭐️</span>
             <div class="feed-content">
@@ -323,7 +206,7 @@
     
     <div class="section">
         <div class="section-header">
-            <h2 class="section-title">🏆 Достижения Ани</h2>
+            <h2 class="section-title">🏆 Достижения</h2>
         </div>
         <div class="stats-grid">
             <div class="stat-card">
@@ -374,11 +257,8 @@
             tg.expand();
             tg.setHeaderColor('#8B4513');
             tg.setBackgroundColor('#FAF6F0');
-            setTimeout(() => tg.expand(), 100);
         }
-        
         function goBack() {
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             window.location.href = '../index.html';
         }
     </script>
