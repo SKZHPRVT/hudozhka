@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="telegram-web-app-capable" content="yes">
+    <title>Преподаватель — Художка.ПРО</title>
+    <style>
+        :root {
+            --primary: #8B4513;
+            --accent: #D2691E;
+            --olive: #6B8E23;
+            --bg-cream: #FAF6F0;
+            --success: #4CAF50;
+            --info: #2196F3;
+            --danger: #FF5722;
+            --tg-hint: #999999;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, sans-serif;
+            background: var(--bg-cream);
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        .top-bar {
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: white;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .top-bar-title { font-size: 16px; font-weight: 600; }
+        
+        .teacher-header {
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: white;
+            padding: 0 16px 20px;
+        }
+        .teacher-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .teacher-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+        .teacher-name { font-size: 18px; font-weight: 600; }
+        .teacher-role { font-size: 13px; opacity: 0.9; }
+        
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .stat-mini {
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+        .stat-mini-value { font-size: 20px; font-weight: 700; }
+        .stat-mini-label { font-size: 11px; opacity: 0.9; }
+        
+        .section { padding: 16px; }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .section-title { font-size: 16px; font-weight: 700; }
+        .see-all { color: var(--olive); font-size: 13px; text-decoration: none; }
+        
+        .schedule-item {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--primary);
+        }
+        .schedule-time {
+            min-width: 60px;
+            text-align: center;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 15px;
+        }
+        .schedule-info { flex: 1; }
+        .schedule-name { font-weight: 600; font-size: 14px; }
+        .schedule-group { font-size: 12px; color: var(--tg-hint); }
+        .schedule-status {
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .status-now { background: #ffe6e6; color: var(--danger); }
+        .status-next { background: #e6f3ff; color: var(--info); }
+        
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .quick-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .quick-icon { font-size: 28px; }
+        .quick-info h3 { font-size: 14px; margin-bottom: 2px; }
+        .quick-info p { font-size: 11px; color: var(--tg-hint); }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 20px;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            color: var(--tg-hint);
+            text-decoration: none;
+            font-size: 11px;
+        }
+        .nav-item.active { color: var(--primary); }
+        .nav-icon { font-size: 22px; margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="top-bar-title">Кабинет преподавателя</div>
+    </div>
+    
+    <div class="teacher-header">
+        <div class="teacher-info">
+            <div class="teacher-avatar">👩‍🏫</div>
+            <div>
+                <div class="teacher-name">Чеча Мария Игоревна</div>
+                <div class="teacher-role">Преподаватель акварели</div>
+            </div>
+        </div>
+        
+        <div class="stats-row">
+            <div class="stat-mini">
+                <div class="stat-mini-value">12</div>
+                <div class="stat-mini-label">Учеников</div>
+            </div>
+            <div class="stat-mini">
+                <div class="stat-mini-value">3</div>
+                <div class="stat-mini-label">Группы</div>
+            </div>
+            <div class="stat-mini">
+                <div class="stat-mini-value">5</div>
+                <div class="stat-mini-label">Сегодня</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">📅 Расписание на сегодня</h2>
+            <a href="schedule.html" class="see-all">Все →</a>
+        </div>
+        
+        <div class="schedule-item">
+            <div class="schedule-time">10:00</div>
+            <div class="schedule-info">
+                <div class="schedule-name">Акварель для начинающих</div>
+                <div class="schedule-group">Группа А-1 • 8 человек</div>
+            </div>
+            <span class="schedule-status status-now">Сейчас</span>
+        </div>
+        
+        <div class="schedule-item">
+            <div class="schedule-time">15:00</div>
+            <div class="schedule-info">
+                <div class="schedule-name">Акварель ПРО</div>
+                <div class="schedule-group">Группа А-2 • 6 человек</div>
+            </div>
+            <span class="schedule-status status-next">Через 2ч</span>
+        </div>
+        
+        <div class="schedule-item">
+            <div class="schedule-time">17:00</div>
+            <div class="schedule-info">
+                <div class="schedule-name">Скетчинг</div>
+                <div class="schedule-group">Группа С-1 • 10 человек</div>
+            </div>
+            <span class="schedule-status status-next">Скоро</span>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">⚡ Быстрые действия</h2>
+        </div>
+        <div class="quick-grid">
+            <a href="journal.html" class="quick-card">
+                <div class="quick-icon">📋</div>
+                <div class="quick-info">
+                    <h3>Журнал</h3>
+                    <p>Отметить посещаемость</p>
+                </div>
+            </a>
+            <a href="homework.html" class="quick-card">
+                <div class="quick-icon">📝</div>
+                <div class="quick-info">
+                    <h3>Задания</h3>
+                    <p>Проверить работы</p>
+                </div>
+            </a>
+            <a href="students.html" class="quick-card">
+                <div class="quick-icon">👥</div>
+                <div class="quick-info">
+                    <h3>Ученики</h3>
+                    <p>12 человек</p>
+                </div>
+            </a>
+            <a href="chat.html" class="quick-card">
+                <div class="quick-icon">💬</div>
+                <div class="quick-info">
+                    <h3>Чаты</h3>
+                    <p>3 новых</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title">📰 Новости школы</h2>
+        </div>
+        <div class="schedule-item" style="border-left-color: var(--info);">
+            <div class="quick-icon" style="font-size: 20px;">📢</div>
+            <div class="schedule-info">
+                <div class="schedule-name">Педагогический совет</div>
+                <div class="schedule-group">Пятница, 18:00 • Актовый зал</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bottom-nav">
+        <a href="dashboard.html" class="nav-item active">
+            <span class="nav-icon">🏠</span>
+            <span>Главная</span>
+        </a>
+        <a href="schedule.html" class="nav-item">
+            <span class="nav-icon">📅</span>
+            <span>Расписание</span>
+        </a>
+        <a href="journal.html" class="nav-item">
+            <span class="nav-icon">📋</span>
+            <span>Журнал</span>
+        </a>
+        <a href="students.html" class="nav-item">
+            <span class="nav-icon">👥</span>
+            <span>Ученики</span>
+        </a>
+        <a href="chat.html" class="nav-item">
+            <span class="nav-icon">💬</span>
+            <span>Чаты</span>
+        </a>
+    </div>
+    
+    <script>
+        let tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            tg.setHeaderColor('#8B4513');
+            tg.setBackgroundColor('#FAF6F0');
+        }
+        function goBack() {
+            window.location.href = '../index.html';
+        }
+    </script>
+</body>
+</html>

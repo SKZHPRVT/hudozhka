@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="telegram-web-app-capable" content="yes">
+    <title>Партнёр — Художка.ПРО</title>
+    <style>
+        :root {
+            --primary: #8B4513;
+            --accent: #D2691E;
+            --olive: #6B8E23;
+            --bg-cream: #FAF6F0;
+            --success: #4CAF50;
+            --info: #2196F3;
+            --gold: #FFD700;
+            --tg-hint: #999999;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, sans-serif;
+            background: var(--bg-cream);
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        .top-bar {
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: white;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .top-bar-title { font-size: 16px; font-weight: 600; }
+        
+        .partner-header {
+            background: linear-gradient(135deg, #2C3E50, #34495E);
+            color: white;
+            padding: 24px 16px;
+            text-align: center;
+        }
+        .partner-header h1 { font-size: 22px; margin-bottom: 6px; }
+        .partner-header p { font-size: 14px; opacity: 0.9; }
+        
+        .offer-card {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #8B4513;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 16px;
+            text-align: center;
+        }
+        .offer-card h2 { font-size: 18px; margin-bottom: 8px; }
+        .offer-card p { font-size: 13px; margin-bottom: 12px; }
+        .offer-btn {
+            background: #8B4513;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .section { padding: 16px; }
+        .section-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 14px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+        .stat-icon { font-size: 24px; margin-bottom: 6px; }
+        .stat-value { font-size: 20px; font-weight: 700; color: var(--primary); }
+        .stat-label { font-size: 12px; color: var(--tg-hint); }
+        
+        .action-list { display: flex; flex-direction: column; gap: 8px; }
+        .action-item {
+            background: white;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+        .action-icon-lg { font-size: 28px; }
+        .action-info { flex: 1; }
+        .action-info h3 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+        .action-info p { font-size: 12px; color: var(--tg-hint); }
+        
+        .franchise-card {
+            background: linear-gradient(135deg, #9B59B6, #8E44AD);
+            color: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+        }
+        .franchise-card h3 { font-size: 16px; margin-bottom: 6px; }
+        .franchise-card p { font-size: 13px; opacity: 0.9; margin-bottom: 12px; }
+        .franchise-btn {
+            background: white;
+            color: #8E44AD;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 20px;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            color: var(--tg-hint);
+            text-decoration: none;
+            font-size: 11px;
+        }
+        .nav-item.active { color: var(--primary); }
+        .nav-icon { font-size: 22px; margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="top-bar-title">Партнёрам</div>
+    </div>
+    
+    <div class="partner-header">
+        <h1>🤝 Партнёрская программа</h1>
+        <p>Художка.ПРО — цифровая экосистема для творческих школ</p>
+    </div>
+    
+    <div class="offer-card">
+        <h2>🚀 Станьте частью сети</h2>
+        <p>Откройте школу рисования под брендом Художка.ПРО</p>
+        <button class="offer-btn" onclick="learnFranchise()">Узнать больше</button>
+    </div>
+    
+    <div class="section">
+        <h2 class="section-title">📊 Рынок EdTech в России</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-value">₽63 млрд</div>
+                <div class="stat-label">Объём рынка (TAM)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-value">₽8 млрд</div>
+                <div class="stat-label">Целевой рынок (SAM)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🚀</div>
+                <div class="stat-value">₽120 млн</div>
+                <div class="stat-label">План на 1 год (SOM)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value">+18%</div>
+                <div class="stat-label">Рост рынка в год</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2 class="section-title">💼 Возможности</h2>
+        <div class="action-list">
+            <a href="franchise.html" class="action-item">
+                <div class="action-icon-lg">🏢</div>
+                <div class="action-info">
+                    <h3>Франшиза школы</h3>
+                    <p>Готовая модель + бренд + технологии</p>
+                </div>
+            </a>
+            
+            <a href="investors.html" class="action-item">
+                <div class="action-icon-lg">💰</div>
+                <div class="action-info">
+                    <h3>Для инвесторов</h3>
+                    <p>Инвестиционные раунды и метрики</p>
+                </div>
+            </a>
+            
+            <a href="analytics.html" class="action-item">
+                <div class="action-icon-lg">📊</div>
+                <div class="action-info">
+                    <h3>Аналитика</h3>
+                    <p>Отчёты и показатели проекта</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2 class="section-title">📢 Рекламодателям</h2>
+        <div class="franchise-card">
+            <h3>Разместите свой бренд</h3>
+            <p>Интеграции с творческими брендами, коллаборации, спонсорство мероприятий</p>
+            <button class="franchise-btn" onclick="advertise()">Связаться</button>
+        </div>
+    </div>
+    
+    <div class="bottom-nav">
+        <a href="dashboard.html" class="nav-item active">
+            <span class="nav-icon">🏠</span>
+            <span>Главная</span>
+        </a>
+        <a href="franchise.html" class="nav-item">
+            <span class="nav-icon">🏢</span>
+            <span>Франшиза</span>
+        </a>
+        <a href="investors.html" class="nav-item">
+            <span class="nav-icon">💰</span>
+            <span>Инвесторам</span>
+        </a>
+        <a href="analytics.html" class="nav-item">
+            <span class="nav-icon">📊</span>
+            <span>Аналитика</span>
+        </a>
+        <a href="../index.html" class="nav-item">
+            <span class="nav-icon">🔙</span>
+            <span>Выход</span>
+        </a>
+    </div>
+    
+    <script>
+        let tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            tg.setHeaderColor('#2C3E50');
+            tg.setBackgroundColor('#FAF6F0');
+        }
+        function goBack() {
+            window.location.href = '../index.html';
+        }
+        function learnFranchise() {
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+            alert('🏢 Франшиза Художка.ПРО\n\nЧто входит:\n• Бренд и методики\n• Mini App для школы\n• Обучение персонала\n• Маркетинговая поддержка');
+        }
+        function advertise() {
+            alert('📢 Свяжитесь с нами:\n\npartners@hudozhka.pro\n+7 915 562-22-02');
+        }
+    </script>
+</body>
+</html>
