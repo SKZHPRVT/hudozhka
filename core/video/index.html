@@ -173,6 +173,13 @@
             }, 1000);
         }
         
+        if (tg && tg.BackButton) {
+            tg.BackButton.show();
+            tg.BackButton.onClick(() => {
+                window.location.href = "../payment/index.html";
+            });
+        }
+        
         function connectToJazz() {
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
             alert('📹 Подключение к SaluteJazz...\n\nДля полной интеграции необходимо:\n1. Получить API ключ SaluteJazz\n2. Настроить WebRTC\n3. Создать комнату для трансляции');

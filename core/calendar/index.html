@@ -226,6 +226,14 @@
         function selectDate(day) {
             selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
             renderCalendar();
+        
+        // Кнопка Назад
+        if (tg && tg.BackButton) {
+            tg.BackButton.show();
+            tg.BackButton.onClick(() => {
+                window.location.href = "../../index.html";
+            });
+        }
             if (tg?.HapticFeedback) tg.HapticFeedback.selectionChanged();
         }
         
@@ -239,6 +247,14 @@
         function changeMonth(delta) {
             currentDate.setMonth(currentDate.getMonth() + delta);
             renderCalendar();
+        
+        // Кнопка Назад
+        if (tg && tg.BackButton) {
+            tg.BackButton.show();
+            tg.BackButton.onClick(() => {
+                window.location.href = "../../index.html";
+            });
+        }
         }
         
         function proceedToPayment() {
@@ -258,6 +274,14 @@
         }
         
         renderCalendar();
+        
+        // Кнопка Назад
+        if (tg && tg.BackButton) {
+            tg.BackButton.show();
+            tg.BackButton.onClick(() => {
+                window.location.href = "../../index.html";
+            });
+        }
     </script>
 </body>
 </html>
