@@ -31,10 +31,8 @@
             margin: 0 auto;
             min-height: 100vh;
             min-height: 100dvh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 20px;
+            padding-bottom: 100px;
         }
         
         .container {
@@ -43,7 +41,7 @@
         
         .logo {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
         }
         
         .logo-icon {
@@ -62,17 +60,25 @@
             font-size: 14px;
         }
         
+        .section-title {
+            text-align: center;
+            font-size: 15px;
+            margin-bottom: 10px;
+            color: #666;
+            font-weight: 600;
+        }
+        
         .core-modules {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 30px;
+            gap: 10px;
+            margin-bottom: 24px;
         }
         
         .core-module {
             background: white;
             border-radius: 16px;
-            padding: 20px 12px;
+            padding: 16px 8px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
@@ -81,23 +87,18 @@
             color: inherit;
         }
         
-        .core-module:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-        }
-        
         .core-module:active {
             transform: scale(0.95);
         }
         
         .core-icon {
-            font-size: 36px;
-            margin-bottom: 8px;
+            font-size: 32px;
+            margin-bottom: 6px;
         }
         
         .core-name {
             font-weight: 600;
-            font-size: 13px;
+            font-size: 12px;
         }
         
         .divider {
@@ -141,9 +142,8 @@
             gap: 14px;
         }
         
-        .role-card:hover {
-            transform: translateX(4px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        .role-card:active {
+            transform: scale(0.98);
         }
         
         .role-icon {
@@ -170,7 +170,7 @@
             <p>Цифровая экосистема школы рисования</p>
         </div>
         
-        <h2 style="text-align: center; font-size: 16px; margin-bottom: 12px; color: #666;">Основные функции</h2>
+        <h2 class="section-title">⚡ Основные функции</h2>
         <div class="core-modules">
             <a href="core/calendar/index.html" class="core-module">
                 <div class="core-icon">📅</div>
@@ -209,7 +209,7 @@
                 <span class="role-icon">👨‍👩‍👧</span>
                 <div class="role-info">
                     <h3>Родитель</h3>
-                    <p>Записи, оплата, видеонаблюдение</p>
+                    <p>Записи, оплата, видеонаблюдение, галерея</p>
                 </div>
             </a>
             
@@ -236,26 +236,12 @@
         
         if (tg) {
             tg.ready();
-            
-            // Принудительно раскрываем на весь экран
             tg.expand();
             tg.isFullscreen = true;
             tg.setHeaderColor('#8B4513');
             tg.setBackgroundColor('#FAF6F0');
-            
-            // Многократное принудительное раскрытие
             setTimeout(() => tg.expand(), 100);
             setTimeout(() => tg.expand(), 500);
-            setTimeout(() => tg.expand(), 1000);
-            setTimeout(() => {
-                tg.isFullscreen = true;
-                tg.expand();
-            }, 1500);
-            
-            // Блокируем свайп для закрытия
-            if (tg.disableVerticalSwipes) {
-                tg.disableVerticalSwipes();
-            }
         }
     </script>
 </body>
