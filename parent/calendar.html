@@ -51,22 +51,9 @@
             justify-content: center;
         }
         
-        .top-bar-title {
-            font-size: 16px;
-            font-weight: 600;
-        }
+        .top-bar-title { font-size: 16px; font-weight: 600; }
         
-        .app-header {
-            background: linear-gradient(135deg, #8B4513, #D2691E);
-            color: white;
-            padding: 0 16px 20px;
-            margin-bottom: 16px;
-        }
-        
-        .app-header h1 { font-size: 18px; margin-bottom: 4px; }
-        .app-header p { font-size: 13px; opacity: 0.9; }
-        
-        .calendar-container { padding: 0 16px; }
+        .calendar-container { padding: 16px; }
         
         .month-selector {
             display: flex;
@@ -120,14 +107,8 @@
             transition: all 0.2s;
         }
         
-        .day.selected {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .day.today {
-            border: 2px solid var(--olive);
-        }
+        .day.selected { background: var(--primary); color: white; }
+        .day.today { border: 2px solid var(--olive); }
         
         .time-slots {
             display: grid;
@@ -147,21 +128,9 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.08);
         }
         
-        .time-slot.available {
-            background: var(--success);
-            color: white;
-        }
-        
-        .time-slot.booked {
-            background: #eee;
-            color: var(--tg-hint);
-            cursor: not-allowed;
-        }
-        
-        .time-slot.selected {
-            background: var(--primary);
-            color: white;
-        }
+        .time-slot.available { background: var(--success); color: white; }
+        .time-slot.booked { background: #eee; color: var(--tg-hint); cursor: not-allowed; }
+        .time-slot.selected { background: var(--primary); color: white; }
         
         .btn-primary {
             width: 100%;

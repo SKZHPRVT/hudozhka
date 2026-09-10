@@ -8,8 +8,6 @@
     <style>
         :root {
             --primary: #8B4513;
-            --accent: #D2691E;
-            --olive: #6B8E23;
             --bg-cream: #FAF6F0;
             --success: #4CAF50;
             --tg-hint: #999999;
@@ -54,7 +52,6 @@
         .top-bar-title { font-size: 16px; font-weight: 600; }
         
         .container { padding: 16px; }
-        
         .section-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
         
         .tariff-card {
@@ -67,11 +64,7 @@
             transition: all 0.2s;
         }
         
-        .tariff-card.selected {
-            border-color: var(--success);
-            background: #f0f8f0;
-        }
-        
+        .tariff-card.selected { border-color: var(--success); background: #f0f8f0; }
         .tariff-name { font-weight: 600; font-size: 14px; }
         .tariff-price { font-size: 20px; font-weight: 700; color: var(--primary); }
         .tariff-description { font-size: 12px; color: var(--tg-hint); }
@@ -90,14 +83,9 @@
             border: 2px solid #ddd;
             border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s;
         }
         
-        .payment-method.selected {
-            border-color: var(--success);
-            background: #f0f8f0;
-        }
-        
+        .payment-method.selected { border-color: var(--success); background: #f0f8f0; }
         .payment-icon { font-size: 24px; }
         .payment-name { font-size: 10px; margin-top: 2px; }
         
@@ -242,7 +230,7 @@
         };
         
         const PAYMENT_METHODS = {
-            TELEGRAM_STARS: { name: 'Telegram Stars', icon: '⭐' },
+            TELEGRAM_STARS: { name: 'Stars', icon: '⭐' },
             YOOKASSA: { name: 'Карта', icon: '💳' },
             SBP: { name: 'СБП', icon: '🏦' }
         };
@@ -252,9 +240,7 @@
         
         function renderTariffs() {
             const container = document.getElementById('tariffs');
-            const keys = Object.keys(TARIFFS);
-            
-            container.innerHTML = keys.map(key => `
+            container.innerHTML = Object.keys(TARIFFS).map(key => `
                 <div class="tariff-card ${key === selectedTariff ? 'selected' : ''}" 
                      onclick="selectTariff('${key}', this)">
                     <div class="tariff-name">${TARIFFS[key].name}</div>
@@ -275,9 +261,7 @@
         
         function renderPaymentMethods() {
             const container = document.getElementById('paymentMethods');
-            const keys = Object.keys(PAYMENT_METHODS);
-            
-            container.innerHTML = keys.map(key => `
+            container.innerHTML = Object.keys(PAYMENT_METHODS).map(key => `
                 <div class="payment-method ${key === selectedMethod ? 'selected' : ''}" 
                      onclick="selectMethod('${key}', this)">
                     <div class="payment-icon">${PAYMENT_METHODS[key].icon}</div>
