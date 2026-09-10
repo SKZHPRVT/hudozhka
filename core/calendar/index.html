@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="telegram-web-app-capable" content="yes">
     <title>Календарь — Художка.ПРО</title>
     <link rel="stylesheet" href="../../shared/css/main.css">
     <style>
@@ -59,6 +60,7 @@
             cursor: pointer;
             font-size: 14px;
             transition: all 0.2s;
+            position: relative;
         }
         
         .day:hover {
@@ -68,16 +70,6 @@
         .day.selected {
             background: var(--primary);
             color: white;
-        }
-        
-        .day.has-lessons::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--olive);
-            border-radius: 50%;
-            margin-top: 20px;
         }
         
         .day.today {
@@ -182,7 +174,18 @@
     
     <script src="../../shared/js/config.js"></script>
     <script>
-        let currentDate = new Date(2026, 8, 1); // Сентябрь 2026
+        let tg = window.Telegram?.WebApp;
+        
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            tg.setHeaderColor('#8B4513');
+            tg.setBackgroundColor('#FAF6F0');
+            setTimeout(() => tg.expand(), 100);
+            tg.disableVerticalSwipes();
+        }
+        
+        let currentDate = new Date(2026, 8, 1);
         let selectedDate = null;
         let selectedTime = null;
         
@@ -200,12 +203,10 @@
             
             let daysHTML = '';
             
-            // Пустые ячейки для первого дня
             for (let i = 1; i < firstDay.getDay(); i++) {
                 daysHTML += '<div></div>';
             }
             
-            // Дни месяца
             for (let day = 1; day <= lastDay.getDate(); day++) {
                 const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
                 const isToday = date.toDateString() === new Date().toDateString();
@@ -221,12 +222,14 @@
         function selectDate(day) {
             selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
             renderCalendar();
+            if (tg?.HapticFeedback) tg.HapticFeedback.selectionChanged();
         }
         
         function selectTime(element) {
             document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
             element.classList.add('selected');
             selectedTime = element.textContent;
+            if (tg?.HapticFeedback) tg.HapticFeedback.selectionChanged();
         }
         
         function changeMonth(delta) {
@@ -250,7 +253,6 @@
             window.location.href = '../payment/index.html';
         }
         
-        // Инициализация
         renderCalendar();
     </script>
 </body>

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="telegram-web-app-capable" content="yes">
     <title>Видео — Художка.ПРО</title>
     <link rel="stylesheet" href="../../shared/css/main.css">
     <style>
@@ -151,15 +152,6 @@
                 </div>
                 <span class="lesson-status status-upcoming">Скоро</span>
             </div>
-            
-            <div class="lesson-item">
-                <span class="lesson-icon">📚</span>
-                <div class="lesson-info">
-                    <div class="lesson-name">Базовый курс рисования</div>
-                    <div class="lesson-time">Прошлое занятие</div>
-                </div>
-                <span class="lesson-status status-completed">Запись</span>
-            </div>
         </div>
         
         <button class="btn btn-primary" style="width: 100%; margin-top: 16px;" onclick="connectToJazz()">
@@ -183,9 +175,20 @@
     </div>
     
     <script src="../../shared/js/config.js"></script>
-    <script src="../../shared/js/api.js"></script>
     <script>
+        let tg = window.Telegram?.WebApp;
+        
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            tg.setHeaderColor('#8B4513');
+            tg.setBackgroundColor('#FAF6F0');
+            setTimeout(() => tg.expand(), 100);
+            tg.disableVerticalSwipes();
+        }
+        
         function connectToJazz() {
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
             alert('📹 Подключение к SaluteJazz...\n\nДля полной интеграции необходимо:\n1. Получить API ключ SaluteJazz\n2. Настроить WebRTC\n3. Создать комнату для трансляции');
         }
     </script>

@@ -169,7 +169,6 @@
             <p>Цифровая экосистема школы рисования</p>
         </div>
         
-        <!-- ЯДРО СИСТЕМЫ -->
         <h2 style="text-align: center; font-size: 16px; margin-bottom: 12px; color: #666;">Основные функции</h2>
         <div class="core-modules">
             <a href="core/calendar/index.html" class="core-module">
@@ -188,7 +187,6 @@
         
         <div class="divider">Выберите роль</div>
         
-        <!-- РОЛИ ПОЛЬЗОВАТЕЛЕЙ -->
         <div class="roles">
             <a href="admin/dashboard.html" class="role-card">
                 <span class="role-icon">👨‍💼</span>
@@ -233,7 +231,6 @@
     </div>
     
     <script>
-        // Инициализация Telegram Web App
         let tg = window.Telegram?.WebApp;
         
         if (tg) {
@@ -242,10 +239,12 @@
             tg.setHeaderColor('#8B4513');
             tg.setBackgroundColor('#FAF6F0');
             
-            const user = tg.initDataUnsafe?.user;
-            if (user) {
-                console.log('Пользователь:', user.first_name);
-            }
+            // Принудительно раскрываем
+            setTimeout(() => tg.expand(), 100);
+            setTimeout(() => tg.expand(), 500);
+            
+            // Блокируем свайп-закрытие
+            tg.disableVerticalSwipes();
         }
     </script>
 </body>

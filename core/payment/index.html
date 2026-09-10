@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="telegram-web-app-capable" content="yes">
     <title>Оплата — Художка.ПРО</title>
     <link rel="stylesheet" href="../../shared/css/main.css">
     <style>
@@ -12,6 +13,7 @@
             padding: 16px;
             cursor: pointer;
             transition: all 0.3s;
+            margin-bottom: 8px;
         }
         
         .tariff-card:hover {
@@ -119,56 +121,71 @@
     
     <script src="../../shared/js/config.js"></script>
     <script>
+        let tg = window.Telegram?.WebApp;
+        
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            tg.setHeaderColor('#8B4513');
+            tg.setBackgroundColor('#FAF6F0');
+            setTimeout(() => tg.expand(), 100);
+            tg.disableVerticalSwipes();
+        }
+        
         let selectedTariff = null;
         let selectedMethod = null;
         
         function renderTariffs() {
             const container = document.getElementById('tariffs');
             const tariffs = Object.values(TARIFFS);
+            const keys = Object.keys(TARIFFS);
             
             container.innerHTML = tariffs.map((tariff, index) => `
                 <div class="tariff-card ${index === 2 ? 'selected' : ''}" 
-                     onclick="selectTariff('${Object.keys(TARIFFS)[index]}')">
+                     onclick="selectTariff('${keys[index]}', this)">
                     <div class="tariff-name">${tariff.name}</div>
                     <div class="tariff-price">${tariff.price} ₽</div>
                     <div class="tariff-description">${tariff.description}</div>
                 </div>
             `).join('');
             
-            // По умолчанию выбираем популярный тариф
-            selectTariff('MONTHLY_8');
+            selectedTariff = keys[2];
+            document.getElementById('selectedTariffName').textContent = TARIFFS[selectedTariff].name;
+            document.getElementById('totalPrice').textContent = `${TARIFFS[selectedTariff].price} ₽`;
         }
         
-        function selectTariff(key) {
+        function selectTariff(key, element) {
             selectedTariff = key;
             document.querySelectorAll('.tariff-card').forEach(c => c.classList.remove('selected'));
-            event.target.closest('.tariff-card').classList.add('selected');
-            
+            element.classList.add('selected');
             document.getElementById('selectedTariffName').textContent = TARIFFS[key].name;
             document.getElementById('totalPrice').textContent = `${TARIFFS[key].price} ₽`;
+            if (tg?.HapticFeedback) tg.HapticFeedback.selectionChanged();
         }
         
         function renderPaymentMethods() {
             const container = document.getElementById('paymentMethods');
             const methods = Object.values(PAYMENT_METHODS);
+            const keys = Object.keys(PAYMENT_METHODS);
             
             container.innerHTML = methods.map((method, index) => `
                 <div class="payment-method ${index === 1 ? 'selected' : ''}" 
-                     onclick="selectMethod('${Object.keys(PAYMENT_METHODS)[index]}')">
+                     onclick="selectMethod('${keys[index]}', this)">
                     <div class="payment-icon">${method.icon}</div>
                     <div>${method.name}</div>
                 </div>
             `).join('');
             
-            selectMethod('YOOKASSA');
+            selectedMethod = keys[1];
+            document.getElementById('selectedMethodName').textContent = PAYMENT_METHODS[selectedMethod].name;
         }
         
-        function selectMethod(key) {
+        function selectMethod(key, element) {
             selectedMethod = key;
             document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-            event.target.closest('.payment-method').classList.add('selected');
-            
+            element.classList.add('selected');
             document.getElementById('selectedMethodName').textContent = PAYMENT_METHODS[key].name;
+            if (tg?.HapticFeedback) tg.HapticFeedback.selectionChanged();
         }
         
         function processPayment() {
@@ -180,23 +197,21 @@
             const tariff = TARIFFS[selectedTariff];
             const method = PAYMENT_METHODS[selectedMethod];
             
-            // Имитация оплаты
+            if (tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+            
             alert(`✅ Оплата прошла успешно!\n\nТариф: ${tariff.name}\nСумма: ${tariff.price} ₽\nСпособ: ${method.name}`);
             
-            // Сохраняем информацию
             localStorage.setItem('payment_info', JSON.stringify({
                 tariff: selectedTariff,
                 method: selectedMethod,
                 date: new Date().toISOString()
             }));
             
-            // Переход к видео
             setTimeout(() => {
                 window.location.href = '../video/index.html';
             }, 1000);
         }
         
-        // Инициализация
         renderTariffs();
         renderPaymentMethods();
     </script>
