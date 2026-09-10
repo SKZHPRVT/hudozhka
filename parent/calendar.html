@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="telegram-web-app-capable" content="yes">
+    <title>Календарь — Родитель</title>
+    <style>
+        :root {
+            --primary: #8B4513;
+            --accent: #D2691E;
+            --olive: #6B8E23;
+            --bg-cream: #FAF6F0;
+            --success: #4CAF50;
+            --tg-hint: #999999;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-cream);
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding-bottom: 80px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .top-bar {
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: white;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .top-bar-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .app-header {
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: white;
+            padding: 0 16px 20px;
+            margin-bottom: 16px;
+        }
+        
+        .app-header h1 { font-size: 18px; margin-bottom: 4px; }
+        .app-header p { font-size: 13px; opacity: 0.9; }
+        
+        .calendar-container { padding: 0 16px; }
+        
+        .month-selector {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .month-selector h2 { font-size: 18px; }
+        
+        .month-nav {
+            background: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+        
+        .weekday {
+            text-align: center;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--tg-hint);
+        }
+        
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            background: white;
+            transition: all 0.2s;
+        }
+        
+        .day.selected {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .day.today {
+            border: 2px solid var(--olive);
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .time-slot {
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .time-slot.available {
+            background: var(--success);
+            color: white;
+        }
+        
+        .time-slot.booked {
+            background: #eee;
+            color: var(--tg-hint);
+            cursor: not-allowed;
+        }
+        
+        .time-slot.selected {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 20px;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            color: var(--tg-hint);
+            text-decoration: none;
+            font-size: 11px;
+        }
+        
+        .nav-item.active { color: var(--primary); }
+        .nav-icon { font-size: 22px; margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="top-bar-title">Календарь</div>
+    </div>
+    
+    <div class="calendar-container">
+        <div class="month-selector">
+            <button class="month-nav" onclick="changeMonth(-1)">←</button>
+            <h2 id="monthTitle">Сентябрь 2026</h2>
+            <button class="month-nav" onclick="changeMonth(1)">→</button>
+        </div>
+        
+        <div class="weekdays">
+            <div class="weekday">Пн</div>
+            <div class="weekday">Вт</div>
+            <div class="weekday">Ср</div>
+            <div class="weekday">Чт</div>
+            <div class="weekday">Пт</div>
+            <div class="weekday">Сб</div>
+            <div class="weekday">Вс</div>
+        </div>
+        
+        <div class="days-grid" id="daysGrid"></div>
+        
+        <h3 style="margin-bottom: 12px;">Свободное время</h3>
+        <div class="time-slots">
+            <div class="time-slot available" onclick="selectTime(this)">10:00</div>
+            <div class="time-slot available" onclick="selectTime(this)">12:00</div>
+            <div class="time-slot booked">14:00</div>
+            <div class="time-slot available" onclick="selectTime(this)">15:00</div>
+            <div class="time-slot available" onclick="selectTime(this)">17:00</div>
+            <div class="time-slot booked">18:00</div>
+        </div>
+        
+        <button class="btn-primary" onclick="proceedToPayment()">
+            Перейти к оплате →
+        </button>
+    </div>
+    
+    <div class="bottom-nav">
+        <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span>Главная</span>
+        </a>
+        <a href="calendar.html" class="nav-item active">
+            <span class="nav-icon">📅</span>
+            <span>Календарь</span>
+        </a>
+        <a href="gallery.html" class="nav-item">
+            <span class="nav-icon">🖼</span>
+            <span>Работы</span>
+        </a>
+        <a href="chat.html" class="nav-item">
+            <span class="nav-icon">💬</span>
+            <span>Чаты</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span>Профиль</span>
+        </a>
+    </div>
+    
+    <script>
+        let tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            tg.setHeaderColor('#8B4513');
+            tg.setBackgroundColor('#FAF6F0');
+            setTimeout(() => tg.expand(), 100);
+        }
+        
+        function goBack() {
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            window.location.href = 'dashboard.html';
+        }
+        
+        let currentDate = new Date(2026, 8, 1);
+        let selectedDate = null;
+        let selectedTime = null;
+        
+        function renderCalendar() {
+            const monthTitle = document.getElementById('monthTitle');
+            const daysGrid = document.getElementById('daysGrid');
+            
+            const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                           'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+            
+            monthTitle.textContent = `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+            
+            const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+            
+            let daysHTML = '';
+            
+            for (let i = 1; i < firstDay.getDay(); i++) {
+                daysHTML += '<div></div>';
+            }
+            
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+                const isToday = date.toDateString() === new Date().toDateString();
+                const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString();
+                
+                daysHTML += `<div class="day ${isToday ? 'today' : ''} ${isSelected ? 'selected' : ''}" 
+                                  onclick="selectDate(${day})">${day}</div>`;
+            }
+            
+            daysGrid.innerHTML = daysHTML;
+        }
+        
+        function selectDate(day) {
+            selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+            renderCalendar();
+            if (tg?.HapticFeedback) tg.HapticFeedback.selectionChanged();
+        }
+        
+        function selectTime(element) {
+            document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedTime = element.textContent;
+            if (tg?.HapticFeedback) tg.HapticFeedback.selectionChanged();
+        }
+        
+        function changeMonth(delta) {
+            currentDate.setMonth(currentDate.getMonth() + delta);
+            renderCalendar();
+        }
+        
+        function proceedToPayment() {
+            if (!selectedDate || !selectedTime) {
+                alert('Выберите дату и время занятия');
+                return;
+            }
+            localStorage.setItem('pending_booking', JSON.stringify({
+                date: selectedDate.toISOString(),
+                time: selectedTime
+            }));
+            window.location.href = 'payment.html';
+        }
+        
+        renderCalendar();
+    </script>
+</body>
+</html>

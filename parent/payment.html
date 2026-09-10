@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="telegram-web-app-capable" content="yes">
+    <title>Оплата — Родитель</title>
+    <style>
+        :root {
+            --primary: #8B4513;
+            --accent: #D2691E;
+            --olive: #6B8E23;
+            --bg-cream: #FAF6F0;
+            --success: #4CAF50;
+            --tg-hint: #999999;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-cream);
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding-bottom: 80px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .top-bar {
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: white;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .top-bar-title { font-size: 16px; font-weight: 600; }
+        
+        .container { padding: 16px; }
+        
+        .section-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+        
+        .tariff-card {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            padding: 12px;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+        
+        .tariff-card.selected {
+            border-color: var(--success);
+            background: #f0f8f0;
+        }
+        
+        .tariff-name { font-weight: 600; font-size: 14px; }
+        .tariff-price { font-size: 20px; font-weight: 700; color: var(--primary); }
+        .tariff-description { font-size: 12px; color: var(--tg-hint); }
+        
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .payment-method {
+            background: white;
+            padding: 12px 6px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .payment-method.selected {
+            border-color: var(--success);
+            background: #f0f8f0;
+        }
+        
+        .payment-icon { font-size: 24px; }
+        .payment-name { font-size: 10px; margin-top: 2px; }
+        
+        .summary {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+        
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .pay-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            background: var(--success);
+            color: white;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 20px;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            color: var(--tg-hint);
+            text-decoration: none;
+            font-size: 11px;
+        }
+        
+        .nav-item.active { color: var(--primary); }
+        .nav-icon { font-size: 22px; margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="top-bar-title">Оплата</div>
+    </div>
+    
+    <div class="container">
+        <div class="section-title">Тариф</div>
+        <div id="tariffs"></div>
+        
+        <div class="section-title" style="margin-top: 12px;">Способ оплаты</div>
+        <div class="payment-methods" id="paymentMethods"></div>
+        
+        <div class="summary">
+            <div class="summary-row">
+                <span>Тариф:</span>
+                <strong id="selectedTariffName">—</strong>
+            </div>
+            <div class="summary-row">
+                <span>Способ:</span>
+                <strong id="selectedMethodName">—</strong>
+            </div>
+            <div class="summary-total">
+                <span>Итого:</span>
+                <strong id="totalPrice">0 ₽</strong>
+            </div>
+        </div>
+        
+        <button class="pay-btn" onclick="processPayment()">Оплатить</button>
+    </div>
+    
+    <div class="bottom-nav">
+        <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span>Главная</span>
+        </a>
+        <a href="calendar.html" class="nav-item">
+            <span class="nav-icon">📅</span>
+            <span>Календарь</span>
+        </a>
+        <a href="gallery.html" class="nav-item">
+            <span class="nav-icon">🖼</span>
+            <span>Работы</span>
+        </a>
+        <a href="chat.html" class="nav-item">
+            <span class="nav-icon">💬</span>
+            <span>Чаты</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span>Профиль</span>
+        </a>
+    </div>
+    
+    <script>
+        let tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            tg.setHeaderColor('#8B4513');
+            tg.setBackgroundColor('#FAF6F0');
+            setTimeout(() => tg.expand(), 100);
+        }
+        
+        function goBack() {
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            window.location.href = 'calendar.html';
+        }
+        
+        const TARIFFS = {
+            SINGLE: { name: 'Разовое занятие', price: 800, description: 'Одно занятие' },
+            MONTHLY_4: { name: 'Абонемент 4 занятия', price: 2800, description: 'Выгодно для новичков' },
+            MONTHLY_8: { name: 'Абонемент 8 занятий', price: 5200, description: 'Популярный выбор' },
+            VIP: { name: 'VIP безлимит', price: 8900, description: 'Максимум творчества' }
+        };
+        
+        const PAYMENT_METHODS = {
+            TELEGRAM_STARS: { name: 'Telegram Stars', icon: '⭐' },
+            YOOKASSA: { name: 'Карта', icon: '💳' },
+            SBP: { name: 'СБП', icon: '🏦' }
+        };
+        
+        let selectedTariff = 'MONTHLY_8';
+        let selectedMethod = 'YOOKASSA';
+        
+        function renderTariffs() {
+            const container = document.getElementById('tariffs');
+            const keys = Object.keys(TARIFFS);
+            
+            container.innerHTML = keys.map(key => `
+                <div class="tariff-card ${key === selectedTariff ? 'selected' : ''}" 
+                     onclick="selectTariff('${key}', this)">
+                    <div class="tariff-name">${TARIFFS[key].name}</div>
+                    <div class="tariff-price">${TARIFFS[key].price} ₽</div>
+                    <div class="tariff-description">${TARIFFS[key].description}</div>
+                </div>
+            `).join('');
+        }
+        
+        function selectTariff(key, element) {
+            selectedTariff = key;
+            document.querySelectorAll('.tariff-card').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('selectedTariffName').textContent = TARIFFS[key].name;
+            document.getElementById('totalPrice').textContent = `${TARIFFS[key].price} ₽`;
+            if (tg?.HapticFeedback) tg.HapticFeedback.selectionChanged();
+        }
+        
+        function renderPaymentMethods() {
+            const container = document.getElementById('paymentMethods');
+            const keys = Object.keys(PAYMENT_METHODS);
+            
+            container.innerHTML = keys.map(key => `
+                <div class="payment-method ${key === selectedMethod ? 'selected' : ''}" 
+                     onclick="selectMethod('${key}', this)">
+                    <div class="payment-icon">${PAYMENT_METHODS[key].icon}</div>
+                    <div class="payment-name">${PAYMENT_METHODS[key].name}</div>
+                </div>
+            `).join('');
+        }
+        
+        function selectMethod(key, element) {
+            selectedMethod = key;
+            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('selectedMethodName').textContent = PAYMENT_METHODS[key].name;
+            if (tg?.HapticFeedback) tg.HapticFeedback.selectionChanged();
+        }
+        
+        function processPayment() {
+            if (tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+            alert(`✅ Оплата прошла успешно!\n\nТариф: ${TARIFFS[selectedTariff].name}\nСумма: ${TARIFFS[selectedTariff].price} ₽`);
+            setTimeout(() => window.location.href = 'video.html', 1000);
+        }
+        
+        renderTariffs();
+        renderPaymentMethods();
+        document.getElementById('selectedTariffName').textContent = TARIFFS[selectedTariff].name;
+        document.getElementById('selectedMethodName').textContent = PAYMENT_METHODS[selectedMethod].name;
+        document.getElementById('totalPrice').textContent = `${TARIFFS[selectedTariff].price} ₽`;
+    </script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="telegram-web-app-capable" content="yes">
+    <title>Видео — Родитель</title>
+    <style>
+        :root {
+            --primary: #8B4513;
+            --accent: #D2691E;
+            --olive: #6B8E23;
+            --bg-cream: #FAF6F0;
+            --danger: #FF5722;
+            --info: #2196F3;
+            --tg-hint: #999999;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-cream);
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding-bottom: 80px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .top-bar {
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: white;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .top-bar-title { font-size: 16px; font-weight: 600; }
+        
+        .container { padding: 16px; }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            background: linear-gradient(135deg, #1a1a1a, #333);
+        }
+        
+        .video-icon { font-size: 48px; margin-bottom: 12px; }
+        
+        .live-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--danger);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .lesson-icon { font-size: 24px; margin-right: 12px; }
+        .lesson-info { flex: 1; }
+        .lesson-name { font-weight: 600; font-size: 14px; }
+        .lesson-time { font-size: 12px; color: var(--tg-hint); }
+        
+        .lesson-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-live { background: #ffe6e6; color: var(--danger); }
+        .status-upcoming { background: #e6f3ff; color: var(--info); }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 20px;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            color: var(--tg-hint);
+            text-decoration: none;
+            font-size: 11px;
+        }
+        
+        .nav-item.active { color: var(--primary); }
+        .nav-icon { font-size: 22px; margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="top-bar-title">Видеонаблюдение</div>
+    </div>
+    
+    <div class="container">
+        <div class="video-container">
+            <div class="video-placeholder">
+                <div class="video-icon">📹</div>
+                <p>Трансляция начнётся в 15:00</p>
+                <p style="font-size: 12px; opacity: 0.7;">Акварель для начинающих</p>
+            </div>
+            <div class="live-badge">LIVE</div>
+        </div>
+        
+        <h3 style="margin-bottom: 12px;">Ближайшие занятия</h3>
+        
+        <div class="lesson-item">
+            <span class="lesson-icon">🎨</span>
+            <div class="lesson-info">
+                <div class="lesson-name">Акварель для начинающих</div>
+                <div class="lesson-time">Сегодня, 15:00 - 16:30</div>
+            </div>
+            <span class="lesson-status status-live">LIVE</span>
+        </div>
+        
+        <div class="lesson-item">
+            <span class="lesson-icon">✏️</span>
+            <div class="lesson-info">
+                <div class="lesson-name">Скетчинг</div>
+                <div class="lesson-time">Завтра, 17:00 - 18:30</div>
+            </div>
+            <span class="lesson-status status-upcoming">Скоро</span>
+        </div>
+        
+        <button class="btn-primary" onclick="connectToJazz()">
+            📹 Подключиться к трансляции
+        </button>
+    </div>
+    
+    <div class="bottom-nav">
+        <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span>Главная</span>
+        </a>
+        <a href="calendar.html" class="nav-item">
+            <span class="nav-icon">📅</span>
+            <span>Календарь</span>
+        </a>
+        <a href="gallery.html" class="nav-item">
+            <span class="nav-icon">🖼</span>
+            <span>Работы</span>
+        </a>
+        <a href="chat.html" class="nav-item">
+            <span class="nav-icon">💬</span>
+            <span>Чаты</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span>Профиль</span>
+        </a>
+    </div>
+    
+    <script>
+        let tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            tg.setHeaderColor('#8B4513');
+            tg.setBackgroundColor('#FAF6F0');
+            setTimeout(() => tg.expand(), 100);
+        }
+        
+        function goBack() {
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            window.location.href = 'dashboard.html';
+        }
+        
+        function connectToJazz() {
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+            alert('📹 Подключение к SaluteJazz...');
+        }
+    </script>
+</body>
+</html>

@@ -15,105 +15,46 @@
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        html, body {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #FAF6F0, #F0E6D8);
             max-width: 480px;
             margin: 0 auto;
             min-height: 100vh;
-            padding: 20px;
-            padding-bottom: 100px;
+            padding: 40px 20px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .logo {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 40px;
         }
         
-        .logo-icon { font-size: 60px; margin-bottom: 12px; }
-        .logo h1 { font-size: 24px; color: var(--primary); margin-bottom: 6px; }
+        .logo-icon { font-size: 72px; margin-bottom: 16px; }
+        .logo h1 { font-size: 28px; color: var(--primary); margin-bottom: 8px; }
         .logo p { color: #666; font-size: 14px; }
         
-        .section-title {
-            text-align: center;
-            font-size: 15px;
-            margin-bottom: 10px;
-            color: #666;
-            font-weight: 600;
-        }
-        
-        .core-modules {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 24px;
-        }
-        
-        .core-module {
-            background: white;
-            border-radius: 16px;
-            padding: 16px 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .core-module:active { transform: scale(0.95); }
-        .core-icon { font-size: 32px; margin-bottom: 6px; }
-        .core-name { font-weight: 600; font-size: 12px; }
-        
-        .divider {
-            text-align: center;
-            margin: 20px 0;
-            color: #999;
-            font-size: 14px;
-            position: relative;
-        }
-        
-        .divider::before,
-        .divider::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 30%;
-            height: 1px;
-            background: #ddd;
-        }
-        
-        .divider::before { left: 0; }
-        .divider::after { right: 0; }
-        
-        .roles { display: flex; flex-direction: column; gap: 10px; }
+        .roles { display: flex; flex-direction: column; gap: 12px; }
         
         .role-card {
             background: white;
-            border-radius: 14px;
-            padding: 14px 18px;
+            border-radius: 16px;
+            padding: 18px 20px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             text-decoration: none;
             color: inherit;
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
         }
         
         .role-card:active { transform: scale(0.98); }
-        .role-icon { font-size: 32px; flex-shrink: 0; }
-        .role-info h3 { font-size: 15px; margin-bottom: 2px; }
-        .role-info p { font-size: 12px; color: #666; }
+        .role-icon { font-size: 36px; flex-shrink: 0; }
+        .role-info h3 { font-size: 16px; margin-bottom: 4px; }
+        .role-info p { font-size: 13px; color: #666; }
     </style>
 </head>
 <body>
@@ -122,24 +63,6 @@
         <h1>Художка.ПРО</h1>
         <p>Цифровая экосистема школы рисования</p>
     </div>
-    
-    <h2 class="section-title">⚡ Основные функции</h2>
-    <div class="core-modules">
-        <a href="core/calendar/index.html" class="core-module">
-            <div class="core-icon">📅</div>
-            <div class="core-name">Календарь</div>
-        </a>
-        <a href="core/payment/index.html" class="core-module">
-            <div class="core-icon">💳</div>
-            <div class="core-name">Оплата</div>
-        </a>
-        <a href="core/video/index.html" class="core-module">
-            <div class="core-icon">📹</div>
-            <div class="core-name">Видео</div>
-        </a>
-    </div>
-    
-    <div class="divider">Выберите роль</div>
     
     <div class="roles">
         <a href="admin/dashboard.html" class="role-card">
