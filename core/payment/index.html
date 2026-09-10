@@ -242,9 +242,15 @@
         if (tg) {
             tg.ready();
             tg.expand();
+            tg.isFullscreen = true;
             tg.setHeaderColor('#8B4513');
             tg.setBackgroundColor('#FAF6F0');
             setTimeout(() => tg.expand(), 100);
+            setTimeout(() => tg.expand(), 500);
+            setTimeout(() => {
+                tg.isFullscreen = true;
+                tg.expand();
+            }, 1000);
         }
         
         let selectedTariff = 'MONTHLY_8';
@@ -315,7 +321,6 @@
             }, 1000);
         }
         
-        // Инициализация
         renderTariffs();
         renderPaymentMethods();
         document.getElementById('selectedTariffName').textContent = TARIFFS[selectedTariff].name;

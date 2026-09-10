@@ -94,10 +94,6 @@
             transition: all 0.2s;
         }
         
-        .time-slot:hover {
-            border-color: var(--primary);
-        }
-        
         .time-slot.available {
             background: var(--success);
             color: white;
@@ -179,10 +175,18 @@
         if (tg) {
             tg.ready();
             tg.expand();
+            tg.isFullscreen = true;
             tg.setHeaderColor('#8B4513');
             tg.setBackgroundColor('#FAF6F0');
             setTimeout(() => tg.expand(), 100);
-            tg.disableVerticalSwipes();
+            setTimeout(() => tg.expand(), 500);
+            setTimeout(() => {
+                tg.isFullscreen = true;
+                tg.expand();
+            }, 1000);
+            if (tg.disableVerticalSwipes) {
+                tg.disableVerticalSwipes();
+            }
         }
         
         let currentDate = new Date(2026, 8, 1);

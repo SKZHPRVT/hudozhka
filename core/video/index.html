@@ -52,10 +52,6 @@
             100% { opacity: 1; }
         }
         
-        .upcoming-lessons {
-            margin-top: 16px;
-        }
-        
         .lesson-item {
             display: flex;
             align-items: center;
@@ -101,11 +97,6 @@
             background: #e6f3ff;
             color: var(--info);
         }
-        
-        .status-completed {
-            background: #f0f0f0;
-            color: var(--tg-hint);
-        }
     </style>
 </head>
 <body>
@@ -125,33 +116,23 @@
         </div>
         
         <h3 style="margin-bottom: 12px;">Ближайшие занятия</h3>
-        <div class="upcoming-lessons">
-            <div class="lesson-item">
-                <span class="lesson-icon">🎨</span>
-                <div class="lesson-info">
-                    <div class="lesson-name">Акварель для начинающих</div>
-                    <div class="lesson-time">Сегодня, 15:00 - 16:30</div>
-                </div>
-                <span class="lesson-status status-live">LIVE</span>
+        
+        <div class="lesson-item">
+            <span class="lesson-icon">🎨</span>
+            <div class="lesson-info">
+                <div class="lesson-name">Акварель для начинающих</div>
+                <div class="lesson-time">Сегодня, 15:00 - 16:30</div>
             </div>
-            
-            <div class="lesson-item">
-                <span class="lesson-icon">✏️</span>
-                <div class="lesson-info">
-                    <div class="lesson-name">Скетчинг</div>
-                    <div class="lesson-time">Завтра, 17:00 - 18:30</div>
-                </div>
-                <span class="lesson-status status-upcoming">Скоро</span>
+            <span class="lesson-status status-live">LIVE</span>
+        </div>
+        
+        <div class="lesson-item">
+            <span class="lesson-icon">✏️</span>
+            <div class="lesson-info">
+                <div class="lesson-name">Скетчинг</div>
+                <div class="lesson-time">Завтра, 17:00 - 18:30</div>
             </div>
-            
-            <div class="lesson-item">
-                <span class="lesson-icon">🖼</span>
-                <div class="lesson-info">
-                    <div class="lesson-name">Городской пейзаж</div>
-                    <div class="lesson-time">Пятница, 16:00 - 17:30</div>
-                </div>
-                <span class="lesson-status status-upcoming">Скоро</span>
-            </div>
+            <span class="lesson-status status-upcoming">Скоро</span>
         </div>
         
         <button class="btn btn-primary" style="width: 100%; margin-top: 16px;" onclick="connectToJazz()">
@@ -181,10 +162,15 @@
         if (tg) {
             tg.ready();
             tg.expand();
+            tg.isFullscreen = true;
             tg.setHeaderColor('#8B4513');
             tg.setBackgroundColor('#FAF6F0');
             setTimeout(() => tg.expand(), 100);
-            tg.disableVerticalSwipes();
+            setTimeout(() => tg.expand(), 500);
+            setTimeout(() => {
+                tg.isFullscreen = true;
+                tg.expand();
+            }, 1000);
         }
         
         function connectToJazz() {

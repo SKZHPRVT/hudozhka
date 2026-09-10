@@ -20,6 +20,8 @@
             height: 100%;
             margin: 0;
             padding: 0;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         body {
@@ -33,7 +35,6 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            -webkit-overflow-scrolling: touch;
         }
         
         .container {
@@ -235,16 +236,26 @@
         
         if (tg) {
             tg.ready();
+            
+            // Принудительно раскрываем на весь экран
             tg.expand();
+            tg.isFullscreen = true;
             tg.setHeaderColor('#8B4513');
             tg.setBackgroundColor('#FAF6F0');
             
-            // Принудительно раскрываем
+            // Многократное принудительное раскрытие
             setTimeout(() => tg.expand(), 100);
             setTimeout(() => tg.expand(), 500);
+            setTimeout(() => tg.expand(), 1000);
+            setTimeout(() => {
+                tg.isFullscreen = true;
+                tg.expand();
+            }, 1500);
             
-            // Блокируем свайп-закрытие
-            tg.disableVerticalSwipes();
+            // Блокируем свайп для закрытия
+            if (tg.disableVerticalSwipes) {
+                tg.disableVerticalSwipes();
+            }
         }
     </script>
 </body>
