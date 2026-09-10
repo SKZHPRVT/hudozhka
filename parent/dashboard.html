@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Родитель — Художка.ПРО</title>
+    <link rel="stylesheet" href="../shared/css/main.css">
+    <style>
+        .dashboard-header {
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: white;
+            padding: 20px 16px;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 16px;
+        }
+        
+        .child-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .child-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+        
+        .child-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .child-group {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .quick-action {
+            background: white;
+            border-radius: 12px;
+            padding: 16px 8px;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .quick-action:active {
+            transform: scale(0.95);
+        }
+        
+        .next-lesson {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .lesson-badge {
+            display: inline-block;
+            background: #ffe6e6;
+            color: #FF5722;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-header">
+        <div class="child-info">
+            <div class="child-avatar">👧</div>
+            <div>
+                <div class="child-name">Аня Смирнова</div>
+                <div class="child-group">Группа: Акварель-2</div>
+            </div>
+        </div>
+        <p style="font-size: 14px; opacity: 0.9;">Следующее занятие: сегодня в 15:00</p>
+    </div>
+    
+    <div style="padding: 0 16px;">
+        <div class="quick-actions">
+            <a href="../core/calendar/index.html" class="quick-action">
+                <div style="font-size: 28px;">📅</div>
+                <div style="font-size: 12px; margin-top: 4px;">Календарь</div>
+            </a>
+            <a href="../core/payment/index.html" class="quick-action">
+                <div style="font-size: 28px;">💳</div>
+                <div style="font-size: 12px; margin-top: 4px;">Оплата</div>
+            </a>
+            <a href="../core/video/index.html" class="quick-action">
+                <div style="font-size: 28px;">📹</div>
+                <div style="font-size: 12px; margin-top: 4px;">Видео</div>
+            </a>
+        </div>
+        
+        <div class="next-lesson">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <h3>Ближайшее занятие</h3>
+                <span class="lesson-badge">Сегодня</span>
+            </div>
+            <p style="font-size: 14px; margin-bottom: 4px;">🎨 Акварель для начинающих</p>
+            <p style="font-size: 13px; color: #666;">15:00 - 16:30</p>
+            <p style="font-size: 13px; color: #666;">Преподаватель: Мария Игоревна</p>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 12px;" onclick="window.location.href='../core/video/index.html'">
+                📹 Смотреть занятие
+            </button>
+        </div>
+    </div>
+    
+    <script src="../shared/js/config.js"></script>
+    <script>
+        let tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Оплата — Художка.ПРО</title>
+    <link rel="stylesheet" href="../../shared/css/main.css">
+    <style>
+        .tariff-card {
+            border: 2px solid #ddd;
+            border-radius: 16px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tariff-card:hover {
+            border-color: var(--primary);
+        }
+        
+        .tariff-card.selected {
+            border-color: var(--success);
+            background: #f0f8f0;
+        }
+        
+        .tariff-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .tariff-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .tariff-description {
+            font-size: 13px;
+            color: var(--tg-hint);
+        }
+        
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .payment-method {
+            padding: 16px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--success);
+            background: #f0f8f0;
+        }
+        
+        .payment-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-header">
+        <h1>💳 Оплата</h1>
+        <p>Выберите тариф и способ оплаты</p>
+    </div>
+    
+    <div style="padding: 16px;">
+        <h3 style="margin-bottom: 12px;">Выберите тариф</h3>
+        <div id="tariffs"></div>
+        
+        <h3 style="margin: 20px 0 12px;">Способ оплаты</h3>
+        <div class="payment-methods" id="paymentMethods"></div>
+        
+        <div class="card" style="margin-top: 20px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span>Выбранный тариф:</span>
+                <strong id="selectedTariffName">—</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span>Способ оплаты:</span>
+                <strong id="selectedMethodName">—</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 20px;">
+                <span>Итого:</span>
+                <strong id="totalPrice">0 ₽</strong>
+            </div>
+        </div>
+        
+        <button class="btn btn-success" style="width: 100%; margin-top: 16px;" onclick="processPayment()">
+            Оплатить
+        </button>
+    </div>
+    
+    <div class="bottom-nav">
+        <a href="../calendar/index.html" class="nav-item">
+            <span class="nav-icon">📅</span>
+            <span>Календарь</span>
+        </a>
+        <a href="index.html" class="nav-item active">
+            <span class="nav-icon">💳</span>
+            <span>Оплата</span>
+        </a>
+        <a href="../video/index.html" class="nav-item">
+            <span class="nav-icon">📹</span>
+            <span>Видео</span>
+        </a>
+    </div>
+    
+    <script src="../../shared/js/config.js"></script>
+    <script>
+        let selectedTariff = null;
+        let selectedMethod = null;
+        
+        function renderTariffs() {
+            const container = document.getElementById('tariffs');
+            const tariffs = Object.values(TARIFFS);
+            
+            container.innerHTML = tariffs.map((tariff, index) => `
+                <div class="tariff-card ${index === 2 ? 'selected' : ''}" 
+                     onclick="selectTariff('${Object.keys(TARIFFS)[index]}')">
+                    <div class="tariff-name">${tariff.name}</div>
+                    <div class="tariff-price">${tariff.price} ₽</div>
+                    <div class="tariff-description">${tariff.description}</div>
+                </div>
+            `).join('');
+            
+            // По умолчанию выбираем популярный тариф
+            selectTariff('MONTHLY_8');
+        }
+        
+        function selectTariff(key) {
+            selectedTariff = key;
+            document.querySelectorAll('.tariff-card').forEach(c => c.classList.remove('selected'));
+            event.target.closest('.tariff-card').classList.add('selected');
+            
+            document.getElementById('selectedTariffName').textContent = TARIFFS[key].name;
+            document.getElementById('totalPrice').textContent = `${TARIFFS[key].price} ₽`;
+        }
+        
+        function renderPaymentMethods() {
+            const container = document.getElementById('paymentMethods');
+            const methods = Object.values(PAYMENT_METHODS);
+            
+            container.innerHTML = methods.map((method, index) => `
+                <div class="payment-method ${index === 1 ? 'selected' : ''}" 
+                     onclick="selectMethod('${Object.keys(PAYMENT_METHODS)[index]}')">
+                    <div class="payment-icon">${method.icon}</div>
+                    <div>${method.name}</div>
+                </div>
+            `).join('');
+            
+            selectMethod('YOOKASSA');
+        }
+        
+        function selectMethod(key) {
+            selectedMethod = key;
+            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+            event.target.closest('.payment-method').classList.add('selected');
+            
+            document.getElementById('selectedMethodName').textContent = PAYMENT_METHODS[key].name;
+        }
+        
+        function processPayment() {
+            if (!selectedTariff || !selectedMethod) {
+                alert('Выберите тариф и способ оплаты');
+                return;
+            }
+            
+            const tariff = TARIFFS[selectedTariff];
+            const method = PAYMENT_METHODS[selectedMethod];
+            
+            // Имитация оплаты
+            alert(`✅ Оплата прошла успешно!\n\nТариф: ${tariff.name}\nСумма: ${tariff.price} ₽\nСпособ: ${method.name}`);
+            
+            // Сохраняем информацию
+            localStorage.setItem('payment_info', JSON.stringify({
+                tariff: selectedTariff,
+                method: selectedMethod,
+                date: new Date().toISOString()
+            }));
+            
+            // Переход к видео
+            setTimeout(() => {
+                window.location.href = '../video/index.html';
+            }, 1000);
+        }
+        
+        // Инициализация
+        renderTariffs();
+        renderPaymentMethods();
+    </script>
+</body>
+</html>
