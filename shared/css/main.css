@@ -33,6 +33,7 @@ body {
     min-height: 100dvh;
     position: relative;
     overflow-x: hidden;
+    overflow-y: auto !important; /* РАЗРЕШАЕМ ПРОКРУТКУ */
     -webkit-overflow-scrolling: touch;
 }
 

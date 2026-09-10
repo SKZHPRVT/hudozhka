@@ -7,10 +7,15 @@
     <title>Оплата — Художка.ПРО</title>
     <link rel="stylesheet" href="../../shared/css/main.css">
     <style>
+        body {
+            overflow-y: auto !important; /* Разрешаем прокрутку */
+            -webkit-overflow-scrolling: touch;
+        }
+        
         .tariff-card {
             border: 2px solid #ddd;
             border-radius: 16px;
-            padding: 16px;
+            padding: 12px;
             cursor: pointer;
             transition: all 0.3s;
             margin-bottom: 8px;
@@ -27,17 +32,17 @@
         
         .tariff-name {
             font-weight: 600;
-            font-size: 16px;
+            font-size: 15px;
         }
         
         .tariff-price {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--primary);
         }
         
         .tariff-description {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--tg-hint);
         }
         
@@ -48,7 +53,7 @@
         }
         
         .payment-method {
-            padding: 16px;
+            padding: 12px;
             text-align: center;
             border: 2px solid #ddd;
             border-radius: 12px;
@@ -66,8 +71,43 @@
         }
         
         .payment-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
+            font-size: 28px;
+            margin-bottom: 4px;
+        }
+        
+        .payment-name {
+            font-size: 11px;
+        }
+        
+        .summary-card {
+            background: white;
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-top: 16px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .pay-btn {
+            width: 100%;
+            margin-top: 16px;
+            padding: 14px;
+            font-size: 16px;
+            position: sticky;
+            bottom: 80px;
         }
     </style>
 </head>
@@ -78,28 +118,28 @@
     </div>
     
     <div style="padding: 16px;">
-        <h3 style="margin-bottom: 12px;">Выберите тариф</h3>
+        <h3 style="margin-bottom: 8px;">Выберите тариф</h3>
         <div id="tariffs"></div>
         
-        <h3 style="margin: 20px 0 12px;">Способ оплаты</h3>
+        <h3 style="margin: 12px 0 8px;">Способ оплаты</h3>
         <div class="payment-methods" id="paymentMethods"></div>
         
-        <div class="card" style="margin-top: 20px;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                <span>Выбранный тариф:</span>
+        <div class="summary-card">
+            <div class="summary-row">
+                <span>Тариф:</span>
                 <strong id="selectedTariffName">—</strong>
             </div>
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                <span>Способ оплаты:</span>
+            <div class="summary-row">
+                <span>Способ:</span>
                 <strong id="selectedMethodName">—</strong>
             </div>
-            <div style="display: flex; justify-content: space-between; font-size: 20px;">
+            <div class="summary-total">
                 <span>Итого:</span>
                 <strong id="totalPrice">0 ₽</strong>
             </div>
         </div>
         
-        <button class="btn btn-success" style="width: 100%; margin-top: 16px;" onclick="processPayment()">
+        <button class="btn btn-success pay-btn" onclick="processPayment()">
             Оплатить
         </button>
     </div>
@@ -129,11 +169,11 @@
             tg.setHeaderColor('#8B4513');
             tg.setBackgroundColor('#FAF6F0');
             setTimeout(() => tg.expand(), 100);
-            tg.disableVerticalSwipes();
+            // УБРАЛИ disableVerticalSwipes - разрешаем прокрутку!
         }
         
-        let selectedTariff = null;
-        let selectedMethod = null;
+        let selectedTariff = 'MONTHLY_8';
+        let selectedMethod = 'YOOKASSA';
         
         function renderTariffs() {
             const container = document.getElementById('tariffs');
@@ -141,17 +181,13 @@
             const keys = Object.keys(TARIFFS);
             
             container.innerHTML = tariffs.map((tariff, index) => `
-                <div class="tariff-card ${index === 2 ? 'selected' : ''}" 
+                <div class="tariff-card ${keys[index] === selectedTariff ? 'selected' : ''}" 
                      onclick="selectTariff('${keys[index]}', this)">
                     <div class="tariff-name">${tariff.name}</div>
                     <div class="tariff-price">${tariff.price} ₽</div>
                     <div class="tariff-description">${tariff.description}</div>
                 </div>
             `).join('');
-            
-            selectedTariff = keys[2];
-            document.getElementById('selectedTariffName').textContent = TARIFFS[selectedTariff].name;
-            document.getElementById('totalPrice').textContent = `${TARIFFS[selectedTariff].price} ₽`;
         }
         
         function selectTariff(key, element) {
@@ -169,15 +205,12 @@
             const keys = Object.keys(PAYMENT_METHODS);
             
             container.innerHTML = methods.map((method, index) => `
-                <div class="payment-method ${index === 1 ? 'selected' : ''}" 
+                <div class="payment-method ${keys[index] === selectedMethod ? 'selected' : ''}" 
                      onclick="selectMethod('${keys[index]}', this)">
                     <div class="payment-icon">${method.icon}</div>
-                    <div>${method.name}</div>
+                    <div class="payment-name">${method.name}</div>
                 </div>
             `).join('');
-            
-            selectedMethod = keys[1];
-            document.getElementById('selectedMethodName').textContent = PAYMENT_METHODS[selectedMethod].name;
         }
         
         function selectMethod(key, element) {
@@ -189,11 +222,6 @@
         }
         
         function processPayment() {
-            if (!selectedTariff || !selectedMethod) {
-                alert('Выберите тариф и способ оплаты');
-                return;
-            }
-            
             const tariff = TARIFFS[selectedTariff];
             const method = PAYMENT_METHODS[selectedMethod];
             
@@ -212,8 +240,12 @@
             }, 1000);
         }
         
+        // Инициализация
         renderTariffs();
         renderPaymentMethods();
+        document.getElementById('selectedTariffName').textContent = TARIFFS[selectedTariff].name;
+        document.getElementById('selectedMethodName').textContent = PAYMENT_METHODS[selectedMethod].name;
+        document.getElementById('totalPrice').textContent = `${TARIFFS[selectedTariff].price} ₽`;
     </script>
 </body>
 </html>
