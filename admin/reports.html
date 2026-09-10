@@ -14,6 +14,7 @@
         .top-bar-title { font-size: 16px; font-weight: 600; }
         .section { padding: 16px; }
         .report-card { background: white; border-radius: 12px; padding: 16px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); display: flex; gap: 12px; align-items: center; cursor: pointer; }
+        .report-card:active { transform: scale(0.98); }
         .report-icon { font-size: 32px; }
         .report-info { flex: 1; }
         .report-name { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
@@ -30,28 +31,28 @@
         <div class="top-bar-title">Отчёты</div>
     </div>
     <div class="section">
-        <div class="report-card">
+        <div class="report-card" onclick="openReport('Выручка по месяцам', 'График дохода за год')">
             <span class="report-icon">📊</span>
             <div class="report-info">
                 <div class="report-name">Выручка по месяцам</div>
                 <div class="report-desc">График роста дохода</div>
             </div>
         </div>
-        <div class="report-card">
+        <div class="report-card" onclick="openReport('Ученики по группам', 'Заполняемость и активность')">
             <span class="report-icon">👥</span>
             <div class="report-info">
                 <div class="report-name">Ученики по группам</div>
                 <div class="report-desc">Заполняемость и активность</div>
             </div>
         </div>
-        <div class="report-card">
+        <div class="report-card" onclick="openReport('Воронка продаж', 'От заявки до оплаты')">
             <span class="report-icon">📈</span>
             <div class="report-info">
                 <div class="report-name">Воронка продаж</div>
                 <div class="report-desc">От заявки до оплаты</div>
             </div>
         </div>
-        <div class="report-card">
+        <div class="report-card" onclick="openReport('Успеваемость учеников', 'Оценки и посещаемость')">
             <span class="report-icon">🎓</span>
             <div class="report-info">
                 <div class="report-name">Успеваемость учеников</div>
@@ -66,6 +67,13 @@
         <a href="reports.html" class="nav-item active"><span class="nav-icon">📊</span><span>Отчёты</span></a>
         <a href="settings.html" class="nav-item"><span class="nav-icon">⚙️</span><span>Ещё</span></a>
     </div>
-    <script>let tg = window.Telegram?.WebApp; if (tg) { tg.ready(); tg.expand(); }</script>
+    <script>
+        let tg = window.Telegram?.WebApp;
+        if (tg) { tg.ready(); tg.expand(); }
+        function openReport(name, desc) {
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            alert(`📊 ${name}\n\n${desc}\n\nВ полной версии здесь будут графики и интерактивные отчёты.`);
+        }
+    </script>
 </body>
 </html>
