@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="telegram-web-app-capable" content="yes">
+    <title>Галерея — Художка.ПРО</title>
+    <style>
+        :root {
+            --primary: #8B4513;
+            --bg-cream: #FAF6F0;
+            --tg-hint: #999999;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-cream);
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        .app-header {
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: white;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .app-header h1 {
+            font-size: 18px;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            padding: 0 16px;
+        }
+        
+        .artwork-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .artwork-card:active {
+            transform: scale(0.97);
+        }
+        
+        .artwork-image {
+            width: 100%;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+        
+        .artwork-info {
+            padding: 8px 12px;
+        }
+        
+        .artwork-title {
+            font-weight: 600;
+            font-size: 13px;
+        }
+        
+        .artwork-meta {
+            font-size: 11px;
+            color: var(--tg-hint);
+            margin-top: 2px;
+        }
+        
+        .artwork-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 4px;
+            font-size: 12px;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 20px;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            color: var(--tg-hint);
+            text-decoration: none;
+            font-size: 11px;
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        .nav-icon {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-header">
+        <h1>🖼 Работы Ани</h1>
+    </div>
+    
+    <div class="gallery-grid">
+        <div class="artwork-card" onclick="openArtwork('Осенний пейзаж')">
+            <div class="artwork-image" style="background: linear-gradient(135deg, #FFD700, #FF8C00);">🍂</div>
+            <div class="artwork-info">
+                <div class="artwork-title">Осенний пейзаж</div>
+                <div class="artwork-meta">Акварель • 2 часа назад</div>
+                <div class="artwork-rating">⭐️ 5.0</div>
+            </div>
+        </div>
+        
+        <div class="artwork-card" onclick="openArtwork('Морской закат')">
+            <div class="artwork-image" style="background: linear-gradient(135deg, #FF6347, #FF4500);">🌅</div>
+            <div class="artwork-info">
+                <div class="artwork-title">Морской закат</div>
+                <div class="artwork-meta">Гуашь • Вчера</div>
+                <div class="artwork-rating">⭐️ 4.8</div>
+            </div>
+        </div>
+        
+        <div class="artwork-card" onclick="openArtwork('Цветы')">
+            <div class="artwork-image" style="background: linear-gradient(135deg, #FFB6C1, #FF69B4);">🌸</div>
+            <div class="artwork-info">
+                <div class="artwork-title">Цветы в вазе</div>
+                <div class="artwork-meta">Пастель • 3 дня назад</div>
+                <div class="artwork-rating">⭐️ 5.0</div>
+            </div>
+        </div>
+        
+        <div class="artwork-card" onclick="openArtwork('Портрет')">
+            <div class="artwork-image" style="background: linear-gradient(135deg, #D2B48C, #8B4513);">👧</div>
+            <div class="artwork-info">
+                <div class="artwork-title">Портрет мамы</div>
+                <div class="artwork-meta">Карандаш • Неделя назад</div>
+                <div class="artwork-rating">⭐️ 4.9</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bottom-nav">
+        <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span>Главная</span>
+        </a>
+        <a href="../core/calendar/index.html" class="nav-item">
+            <span class="nav-icon">📅</span>
+            <span>Календарь</span>
+        </a>
+        <a href="gallery.html" class="nav-item active">
+            <span class="nav-icon">🖼</span>
+            <span>Работы</span>
+        </a>
+        <a href="chat.html" class="nav-item">
+            <span class="nav-icon">💬</span>
+            <span>Чаты</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span>Профиль</span>
+        </a>
+    </div>
+    
+    <script>
+        let tg = window.Telegram?.WebApp;
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            tg.setHeaderColor('#8B4513');
+            tg.setBackgroundColor('#FAF6F0');
+            setTimeout(() => tg.expand(), 100);
+        }
+        
+        function openArtwork(title) {
+            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+            alert(`🖼 «${title}»\n\nВ полной версии здесь будет:\n• Полноэкранный просмотр\n• Комментарии преподавателя\n• Оценки\n• Возможность скачать`);
+        }
+    </script>
+</body>
+</html>
